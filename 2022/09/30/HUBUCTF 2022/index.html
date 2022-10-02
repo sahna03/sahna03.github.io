@@ -4,8 +4,13 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SWPU新生赛, sahna">
-    <meta name="description" content="">
+    <meta name="keywords" content="HUBUCTF 2022, sahna">
+    <meta name="description" content="checkin源码
+&amp;lt;?php
+show_source(__FILE__);
+$username  = &#34;this_is_secret&#34;; 
+$password  = &#34;this_is_not_known_to_you&#34;; 
+incl">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +22,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>SWPU新生赛 | sahna</title>
+    <title>HUBUCTF 2022 | sahna</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -201,12 +206,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">SWPU新生赛</h1>
+                    <h1 class="description center-align post-title">HUBUCTF 2022</h1>
                 </div>
             </div>
         </div>
@@ -249,7 +254,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    167
                 </div>
                 
 
@@ -274,7 +279,91 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h3 id="checkin"><a href="#checkin" class="headerlink" title="checkin"></a><strong>checkin</strong></h3><p>源码</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token function">show_source</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$username</span>  <span class="token operator">=</span> <span class="token string double-quoted-string">"this_is_secret"</span><span class="token punctuation">;</span> 
+<span class="token variable">$password</span>  <span class="token operator">=</span> <span class="token string double-quoted-string">"this_is_not_known_to_you"</span><span class="token punctuation">;</span> 
+<span class="token keyword">include</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"flag.php"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//here I changed those two </span>
+<span class="token variable">$info</span> <span class="token operator">=</span> <span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'info'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">?</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'info'</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token string double-quoted-string">""</span> <span class="token punctuation">;</span>
+<span class="token variable">$data_unserialize</span> <span class="token operator">=</span> <span class="token function">unserialize</span><span class="token punctuation">(</span><span class="token variable">$info</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$data_unserialize</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'username'</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token variable">$username</span><span class="token operator">&amp;&amp;</span><span class="token variable">$data_unserialize</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'password'</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token variable">$password</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">echo</span> <span class="token variable">$flag</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">echo</span> <span class="token string double-quoted-string">"username or password error!"</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">&#125;</span>
+
+<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>php弱比较&#x3D;&#x3D;绕过</p>
+<p>构造exp<img src="https://sahna.oss-cn-hangzhou.aliyuncs.com/blog/image-20220930111533320.png"></p>
+<p>回显flag</p>
+<p><img src="https://sahna.oss-cn-hangzhou.aliyuncs.com/blog/image-20220930111749797.png"></p>
+<h3 id="HowToGetShell"><a href="#HowToGetShell" class="headerlink" title="HowToGetShell"></a><strong>HowToGetShell</strong></h3><p>源码</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token function">show_source</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$mess</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'mess'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"/[a-zA-Z]/"</span><span class="token punctuation">,</span><span class="token variable">$mess</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"invalid input!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">eval</span><span class="token punctuation">(</span><span class="token variable">$mess</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>无字母数字RCE</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/miuzzx/article/details/109143413?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522166029976116782246437375%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=166029976116782246437375&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~pc_rank_34-6-109143413-null-null.142%5Ev40%5Epc_rank_34_1,185%5Ev2%5Econtrol&utm_term=%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97rce%E7%BB%95%E8%BF%87&spm=1018.2226.3001.4187">贴篇博客</a></p>
+<p><img src="https://sahna.oss-cn-hangzhou.aliyuncs.com/blog/image-20220930160345370.png"></p>
+<h3 id="ezsql"><a href="#ezsql" class="headerlink" title="ezsql"></a><strong>ezsql</strong></h3><h3 id="Calculate"><a href="#Calculate" class="headerlink" title="Calculate"></a><strong>Calculate</strong></h3><p>跑脚本</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> time
+<span class="token keyword">import</span> requests
+<span class="token keyword">import</span> re
+
+url <span class="token operator">=</span> <span class="token string">'http://1.14.71.254:28638/'</span>
+ses <span class="token operator">=</span> requests<span class="token punctuation">.</span>session<span class="token punctuation">(</span><span class="token punctuation">)</span>
+reg <span class="token operator">=</span> re<span class="token punctuation">.</span><span class="token builtin">compile</span><span class="token punctuation">(</span><span class="token string">">(.)&lt;/div"</span><span class="token punctuation">)</span>
+<span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+    get <span class="token operator">=</span> ses<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+    math <span class="token operator">=</span> reg<span class="token punctuation">.</span>findall<span class="token punctuation">(</span>get<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+    final <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>math<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+    result <span class="token operator">=</span> <span class="token builtin">str</span><span class="token punctuation">(</span><span class="token builtin">eval</span><span class="token punctuation">(</span>final<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>
+    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    post <span class="token operator">=</span> ses<span class="token punctuation">.</span>post<span class="token punctuation">(</span>url<span class="token operator">=</span>url<span class="token punctuation">,</span> data<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">"ans"</span><span class="token punctuation">:</span> result<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token string">'NSS'</span> <span class="token keyword">in</span> post<span class="token punctuation">.</span>text<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>post<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+        <span class="token keyword">break</span>
+    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 
             </div>
             <hr/>
@@ -300,7 +389,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://sahna03.github.io/2022/09/30/NSS%E6%96%B0%E7%94%9F%E8%B5%9B/">http://sahna03.github.io/2022/09/30/NSS%E6%96%B0%E7%94%9F%E8%B5%9B/</a>
+                    <a href="http://sahna03.github.io/2022/09/30/HUBUCTF%202022/">http://sahna03.github.io/2022/09/30/HUBUCTF%202022/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -378,18 +467,54 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/09/30/NSS%E6%96%B0%E7%94%9F%E8%B5%9B/">
+                <a href="/2022/09/30/NewStarCTF2022/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="SWPU新生赛">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="NewStarCTF2022">
                         
-                        <span class="card-title">SWPU新生赛</span>
+                        <span class="card-title">NewStarCTF2022</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-30
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            sahna
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/09/30/HUBUCTF%202022/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="HUBUCTF 2022">
+                        
+                        <span class="card-title">HUBUCTF 2022</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -411,43 +536,6 @@
                     </div>
                 </div>
 
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/09/30/NewStarCTF2022/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="NewStarCTF2022">
-                        
-                        <span class="card-title">NewStarCTF2022</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-30
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            sahna
-                            
-                        </span>
-                    </div>
-                </div>
                 
             </div>
         </div>
